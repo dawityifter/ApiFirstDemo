@@ -1,0 +1,2077 @@
+{
+  "basePath": "/",
+  "definitions": {
+    "Address": {
+      "description": "Represents an address within the API.",
+      "properties": {
+        "addressLine1": {
+          "description": "The first line of the address.",
+          "example": "123 Main St.",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "addressLine2": {
+          "description": "The second line of the address if applicable.",
+          "example": "PO Box 101",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "addressLine3": {
+          "description": "The third line of the address if applicable.",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "addressLine4": {
+          "description": "The fourth line of the address if applicable.",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "city": {
+          "description": "The address city.",
+          "example": "New Brunswick",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "countryCode": {
+          "default": "US",
+          "description": "The two or three character country code from ISO-3166. If the client is designated as OFX, three letter country code from ISO-3166 is provided.",
+          "maxLength": 3,
+          "minLength": 2,
+          "type": "string"
+        },
+        "created": {
+          "description": "The timestamp when the `Address` was created.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "defaultAddress": {
+          "default": false,
+          "description": "Is this the default address.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `Address`.",
+          "example": "Qyh1JwU2t4JA",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the `Address`",
+          "example": "u_a60be9da-3316-42c1-a582-f41bea56470b",
+          "readOnly": true,
+          "type": "string"
+        },
+        "postalCode": {
+          "description": "The postal code for this address. Supports international postal codes as well.",
+          "example": "10001",
+          "type": "string"
+        },
+        "province": {
+          "description": "The province for international addresses",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "stateAbbreviation": {
+          "description": "The two character abbreviation for the address state. Not used in international addresses.",
+          "example": "NJ",
+          "maxLength": 2,
+          "minLength": 2,
+          "type": "string"
+        },
+        "status": {
+          "default": "ACTIVE",
+          "description": "Indicates the address status.",
+          "enum": [
+            "ACTIVE",
+            "ARCHIVED"
+          ],
+          "example": "ACTIVE",
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates the address type.",
+          "enum": [
+            "MAILING",
+            "PHYSICAL"
+          ],
+          "example": "MAILING",
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `Address` was last updated.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "verified": {
+          "default": false,
+          "description": "Has the address been verified for KYC compliance.",
+          "readOnly": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "addressLine1",
+        "city",
+        "postalCode",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Amount": {
+      "description": "Represents an amount of money, such as a payment amount or an account balance.",
+      "properties": {
+        "amount": {
+          "description": "The amount of money expressed as a String.",
+          "example": "9999.99",
+          "pattern": "^-?[0-9]*(\\.([0-9]{1,2}))?$",
+          "type": "string"
+        },
+        "currency": {
+          "default": "USD",
+          "description": "Indicates the `Currency` unit of the amount.",
+          "enum": [
+            "USD"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount"
+      ],
+      "type": "object"
+    },
+    "AnnualSchedule": {
+      "description": "Determines when `Payments` are made for the associated `PayeeAccount`.",
+      "properties": {
+        "dayOfYearToRepeat": {
+          "description": "The days of the year on which to make a `Payment`.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "repeatEveryXYears": {
+          "description": "The yearly frequency at which to make a `Payment`. If the user specifies the value 1 for `repeatEveryXYears`, a `Payment` is made every year.  If the user specifies 2 for `repeatEveryXYears` a `Payment` is made every other year.",
+          "format": "int32",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "dayOfYearToRepeat",
+        "repeatEveryXYears"
+      ],
+      "type": "object"
+    },
+    "AuthorizedUser": {
+      "description": "Represents a user associated with a partner bank account or a funding `BankAccount`.",
+      "properties": {
+        "addresses": {
+          "description": "The list of `Address` for the `AuthorizedUser`.",
+          "items": {
+            "$ref": "#/definitions/Address"
+          },
+          "type": "array"
+        },
+        "created": {
+          "description": "The timestamp when the `AuthorizedUser` was created.",
+          "example": "2017-01-01T13:01:01Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `AuthorizedUser`.",
+          "example": "Qyh1JwU2t4JA",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the `AuthorizedUser`.",
+          "example": "auser_45fc183f900c4d9292610254b04c0089",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "$ref": "#/definitions/Name"
+        },
+        "status": {
+          "description": "Indicates the status of the `AuthorizedUser`.",
+          "enum": [
+            "ACTIVE",
+            "ARCHIVED"
+          ],
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `AuthorizedUser` was last updated.",
+          "example": "2017-01-01T13:01:01Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "addresses",
+        "name",
+        "status"
+      ],
+      "type": "object"
+    },
+    "BankAccount": {
+      "description": "Represents the `BankAccount` associated with a `FundingAccount` or `CustomerFundingAccount`.",
+      "properties": {
+        "accountNumber": {
+          "description": "The last 4 digits of the `BankAccount` account number.",
+          "example": "0812",
+          "type": "string"
+        },
+        "authorizedUsers": {
+          "description": "The list of `AuthorizedUsers` that are authorized users of the `BankAccount`.",
+          "items": {
+            "$ref": "#/definitions/AuthorizedUser"
+          },
+          "type": "array"
+        },
+        "created": {
+          "description": "The timestamp when the `BankAccount` was created.",
+          "example": "2017-01-01T13:01:01Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the `BankAccount`.",
+          "example": "ba_45fc183f900c4d9292610254b04c0089",
+          "readOnly": true,
+          "type": "string"
+        },
+        "routingNumber": {
+          "description": "The `BankAccount` routing number.",
+          "example": "689340812",
+          "type": "string"
+        },
+        "subType": {
+          "enum": [
+            "CHECKING",
+            "SAVINGS"
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates the type of `BankAccount`.",
+          "enum": [
+            "DDA",
+            "MMA",
+            "LOAN"
+          ],
+          "example": "DDA",
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `BankAccount` was last updated.",
+          "example": "2017-01-01T13:01:01Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "accountNumber",
+        "created",
+        "id",
+        "routingNumber",
+        "type",
+        "updated"
+      ],
+      "type": "object"
+    },
+    "BillBasedSummary": {
+      "description": "Returns the summary details for a `BillBased` `RecurringSchedule`.",
+      "properties": {
+        "daysRelativeToDueDate": {
+          "description": "Determines when a payment is made for a `BillBased` schedule.",
+          "enum": [
+            "DUE_DATE",
+            "ONE_BUSINESS_DAY_BEFORE",
+            "THREE_BUSINESS_DAYS_BEFORE"
+          ],
+          "example": "DUE_DATE",
+          "type": "string"
+        },
+        "fixedAmount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "payCurrentBill": {
+          "default": false,
+          "description": "Indicates if the current `Bill` was paid when the `RecurringSchedule` was created.",
+          "type": "boolean"
+        },
+        "paymentAmountConfig": {
+          "description": "Determines which amount is paid each billing period as classified by the merchant.",
+          "enum": [
+            "MINIMUM_DUE",
+            "AMOUNT_DUE",
+            "BALANCE",
+            "FIXED_AMOUNT"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "daysRelativeToDueDate",
+        "paymentAmountConfig"
+      ],
+      "type": "object"
+    },
+    "CalendarBasedSummary": {
+      "description": "Returns the summary details for a `CalendarBased` `RecurringSchedule`.",
+      "properties": {
+        "annualSchedule": {
+          "$ref": "#/definitions/AnnualSchedule"
+        },
+        "memo": {
+          "description": "An optional message associated with a `Payment` to indicate what the `Payment` is for. The `memo` is printed on the check if the `Payment` is made using a check.",
+          "type": "string"
+        },
+        "monthlySchedule": {
+          "$ref": "#/definitions/MonthlySchedule"
+        },
+        "nextDate": {
+          "description": "The date of the next `Payment`.",
+          "format": "date",
+          "type": "string"
+        },
+        "paymentAmount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "startDate": {
+          "description": "The staring date of the `RecurringSchedule`.",
+          "format": "date",
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates which of `weeklySchedule`, `monthlySchedule` or `annualSchedule` is provided.",
+          "enum": [
+            "WEEKLY",
+            "MONTHLY",
+            "ANNUALLY"
+          ],
+          "example": "MONTHLY",
+          "type": "string"
+        },
+        "weeklySchedule": {
+          "$ref": "#/definitions/WeeklySchedule"
+        }
+      },
+      "required": [
+        "paymentAmount",
+        "startDate",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Card": {
+      "description": "Represents the `Card` to use for a `CustomerFundingAccount`.",
+      "properties": {
+        "billingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "brand": {
+          "description": "Indicates the network of the `Card`.",
+          "enum": [
+            "VISA",
+            "MASTERCARD",
+            "DISCOVER",
+            "AMEX",
+            "DINERS_CLUB",
+            "JCB",
+            "UNKNOWN"
+          ],
+          "example": "AMEX",
+          "type": "string"
+        },
+        "created": {
+          "description": "The timestamp when the `Card` was created.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "expirationDate": {
+          "description": "The date the `Card` expires.",
+          "example": "2021-01-01",
+          "format": "date",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `Card`.",
+          "example": "Qyh1JwU2t4JA",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "description": "The identifier for the `Card`",
+          "example": "c_83ede6ae-a080-11ea-bb37-0242ac130002",
+          "readOnly": true,
+          "type": "string"
+        },
+        "nameOnCard": {
+          "description": "The name of the card holder as printed on the `Card`.",
+          "example": "Able N. Dwelling",
+          "readOnly": true,
+          "type": "string"
+        },
+        "number": {
+          "description": "The card number.",
+          "example": "3333",
+          "pattern": "[#0-9]{12,}[0-9]{4}",
+          "readOnly": true,
+          "type": "string"
+        },
+        "token": {
+          "description": "For improved security, instead of providing a card number, a token can be provided that BillGO will use to lookup the `Card` details.",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "CREDIT",
+            "DEBIT"
+          ],
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `Card` was last updated.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "billingAddress",
+        "brand",
+        "created",
+        "expirationDate",
+        "id",
+        "nameOnCard",
+        "type",
+        "updated"
+      ],
+      "type": "object"
+    },
+    "Check": {
+      "description": "Represents the `Check` that was used to make the `Payment`. Provides resource links for retrieving front and back images of the `Check`.",
+      "properties": {
+        "backImageHash": {
+          "description": "The SHA-1 hash of the back of the `Check`.",
+          "type": "string"
+        },
+        "backImageLink": {
+          "$ref": "#/definitions/ResourceLink"
+        },
+        "backImageSize": {
+          "description": "The size of the back of the `Check` image in bytes.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "checkClearedDate": {
+          "description": "The date when the check cleared.",
+          "example": "2022-04-10",
+          "format": "date",
+          "type": "string"
+        },
+        "checkGeneratedDateTime": {
+          "description": "The date and time when the check was generated.",
+          "example": "2022-03-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "contentType": {
+          "description": "The MIME content type of the `Check` image.",
+          "type": "string"
+        },
+        "created": {
+          "description": "The timestamp when the `Check` was created.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `Check`.",
+          "example": "Qyh1JwU2t4JA",
+          "type": "string"
+        },
+        "fboAccountNumber": {
+          "description": "The fbo account number on the check.",
+          "type": "string"
+        },
+        "fboRoutingNumber": {
+          "description": "The fbo routing number on the check.",
+          "type": "string"
+        },
+        "frontImageHash": {
+          "description": "The SHA-1 hash of the front of the `Check`.",
+          "type": "string"
+        },
+        "frontImageLink": {
+          "$ref": "#/definitions/ResourceLink"
+        },
+        "frontImageSize": {
+          "description": "The size of the front of the `Check` image in bytes.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "description": "The unique identifier for the `Check`.",
+          "type": "string"
+        },
+        "memo": {
+          "description": "The user provided message associated with the `Payment`. The `memo` will be found on the `Check` image.",
+          "type": "string"
+        },
+        "partnerId": {
+          "description": "An optional field for partners to add a partner ID for this `Check`.",
+          "type": "string"
+        },
+        "sequenceNumber": {
+          "description": "The sequence number on the check.",
+          "type": "string"
+        },
+        "validCheck": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "created",
+        "id"
+      ],
+      "type": "object"
+    },
+    "CreditAuthRequest": {
+      "description": "A request from BillGO to a partner to credit funds to a user's account if a payment is returned.",
+      "properties": {
+        "accountNumber": {
+          "description": "The account number of the user's account where the amount will be credited. Will be used if a partnerId was not provided when the `FundingAccount` was created.",
+          "type": "string"
+        },
+        "billGoUserId": {
+          "description": "Unique BillGO ID of the user making the credit authorization.",
+          "type": "string"
+        },
+        "partnerId": {
+          "description": "When a user's `FundingAccount` is created with a `partnerId` the id will be populated on the auth request instead of the actual routingNumber and accountNumber. BillGO strongly advises the use of a `partnerId`.",
+          "type": "string"
+        },
+        "partnerUserId": {
+          "description": "Unique partner user ID of the user requesting the credit authorization.",
+          "type": "string"
+        },
+        "paymentDetails": {
+          "$ref": "#/definitions/Payment"
+        },
+        "routingNumber": {
+          "description": "The routing number of the user's account where the amount will be credited. Will be used if a partnerId was not provided when the `FundingAccount` was created.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "billGoUserId",
+        "partnerUserId",
+        "paymentDetails"
+      ],
+      "type": "object"
+    },
+    "CreditAuthResponse": {
+      "description": "A partner's response to BillGO's request to credit funds to a user's account.",
+      "properties": {
+        "creditAuthTransactionId": {
+          "description": "The unique id representing the credit auth request.",
+          "type": "string"
+        },
+        "paymentId": {
+          "description": "BillGO's unique id associated with the payment.",
+          "type": "string"
+        },
+        "paymentResultId": {
+          "description": "BillGO's unique id associated with the payment's result.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of the credit auth request.",
+          "enum": [
+            "AUTHORIZED",
+            "DECLINED",
+            "FAILED"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "paymentId",
+        "status"
+      ],
+      "type": "object"
+    },
+    "CustomerFundingAccount": {
+      "description": "Represents the `CustomerFundingAccount` for making `Payment`s. `CustomerFundingAccount` can be one of two types: `Card` or `BankAccount`. Only one of the two types can be used per `CustomerFundingAccount` instance.",
+      "properties": {
+        "bankAccount": {
+          "$ref": "#/definitions/ExternalBankAccount"
+        },
+        "card": {
+          "$ref": "#/definitions/Card"
+        },
+        "created": {
+          "description": "When the `CustomerFundingAccount` was created.",
+          "example": "2018-03-15T18:20:01Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `CustomerFundingAccount`.",
+          "example": "Qyh1JwU2t4JA",
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the `CustomerFundingAccount`.",
+          "example": "cfa_b8ef29c894cc4ecca9446d00b0a1e838",
+          "type": "string"
+        },
+        "nickname": {
+          "description": "User supplied name for this account",
+          "type": "string"
+        },
+        "partnerId": {
+          "description": "An optional field for partners to add a partner ID for this `CustomerFundingAccount`.",
+          "example": "f5a1859358dc4c44bf27c7fb73d29c03",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the `CustomerFundingAccount`.",
+          "enum": [
+            "ACTIVE",
+            "ARCHIVED"
+          ],
+          "example": "ACTIVE",
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates the type of the `CustomerFundingAccountType`.",
+          "enum": [
+            "CARD",
+            "BANK_ACCOUNT"
+          ],
+          "example": "CARD",
+          "type": "string"
+        },
+        "updated": {
+          "description": "When the `CustomerFundingAccount` was last updated.",
+          "example": "2018-03-15T18:20:01Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "userLink": {
+          "$ref": "#/definitions/Link"
+        }
+      },
+      "required": [
+        "created",
+        "id",
+        "status",
+        "type",
+        "updated",
+        "userLink"
+      ],
+      "type": "object"
+    },
+    "DebitAuthRequest": {
+      "description": "A request from BillGO to a partner to debit funds from a user's account to cover a payment.",
+      "properties": {
+        "accountNumber": {
+          "description": "The account number of the user's account where the amount will be debited. Will be used if a partnerId was not provided when the `FundingAccount` was created.",
+          "type": "string"
+        },
+        "billGoUserId": {
+          "description": "Unique BillGO ID of the user making the debit authorization.",
+          "type": "string"
+        },
+        "partnerId": {
+          "description": "When a user's `FundingAccount` is created with a `partnerId` the id will be populated on the auth request instead of the actual routingNumber and accountNumber. BillGO strongly advises the use of a `partnerId`.",
+          "type": "string"
+        },
+        "partnerUserId": {
+          "description": "Unique partner user ID of the user requesting the debit authorization.",
+          "type": "string"
+        },
+        "paymentDetails": {
+          "$ref": "#/definitions/Payment"
+        },
+        "routingNumber": {
+          "description": "The routing number of the user's account where the amount will be debited. Will be used if a partnerId was not provided when the `FundingAccount` was created..",
+          "type": "string"
+        }
+      },
+      "required": [
+        "billGoUserId",
+        "partnerUserId",
+        "paymentDetails"
+      ],
+      "type": "object"
+    },
+    "DebitAuthResponse": {
+      "description": "A partner's response to BillGO's request to debit funds from a user's account.",
+      "properties": {
+        "debitAuthTransactionId": {
+          "description": "The unique id representing the debit auth request.",
+          "type": "string"
+        },
+        "paymentId": {
+          "description": "BillGO's unique id associated with the payment.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of the debit auth request. If a status of `DECLINED` isreturned, the payment will not be processed and the payment status will be set to `CANCELLED` with a status code of `CANCELLED_NSF`.",
+          "enum": [
+            "AUTHORIZED",
+            "DECLINED",
+            "FAILED"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "paymentId",
+        "status"
+      ],
+      "type": "object"
+    },
+    "Device": {
+      "description": "Information about the device used by the user to create the payment.",
+      "properties": {
+        "anonymizerInUse": {
+          "description": "Is an anonymizer in use on the device",
+          "type": "boolean"
+        },
+        "areaCode": {
+          "description": "The telephone area code the device is in",
+          "type": "string"
+        },
+        "browser": {
+          "description": "The browser used to create the payment",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city where the device is",
+          "type": "string"
+        },
+        "clientTimeZone": {
+          "description": "The time zone the device is in",
+          "type": "string"
+        },
+        "continentCode": {
+          "description": "The continent where the device is",
+          "type": "string"
+        },
+        "countryCode": {
+          "description": "The country where the device is",
+          "type": "string"
+        },
+        "deviceId": {
+          "description": "The device ID captured when the customer initiated the transaction.",
+          "type": "string"
+        },
+        "deviceOs": {
+          "description": "The device's operating system",
+          "type": "string"
+        },
+        "flashData": {
+          "description": "Any flash data from the device",
+          "type": "string"
+        },
+        "httpRequestHeaders": {
+          "additionalProperties": {
+            "description": "Any HTTP request headers on the payment creation request",
+            "type": "string"
+          },
+          "description": "Any HTTP request headers on the payment creation request",
+          "type": "object"
+        },
+        "installedFlashFonts": {
+          "description": "The flash fonts installed on the device",
+          "items": {
+            "description": "The flash fonts installed on the device",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "installedJsFonts": {
+          "description": "Any javascript fonts installed on the device",
+          "items": {
+            "description": "Any javascript fonts installed on the device",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "installedPlugins": {
+          "description": "Plugins installed in the user's browser",
+          "items": {
+            "description": "Plugins installed in the user's browser",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ipAddress": {
+          "description": "The IP address of the device",
+          "type": "string"
+        },
+        "latitude": {
+          "description": "The location of the device",
+          "type": "string"
+        },
+        "longitude": {
+          "description": "The location of the device",
+          "type": "string"
+        },
+        "metroCode": {
+          "description": "The metropolitan code where the device is",
+          "type": "string"
+        },
+        "mimeTypes": {
+          "description": "MIME types specified",
+          "items": {
+            "description": "MIME types specified",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mobileNumber": {
+          "description": "The mobile number of the device used to create the payment.",
+          "type": "string"
+        },
+        "navigator": {
+          "description": "Any screen navigator in use by the user",
+          "type": "string"
+        },
+        "networkCarrier": {
+          "description": "The network carrier the device is connected to",
+          "type": "string"
+        },
+        "postalCode": {
+          "description": "The postal code of the device's location",
+          "type": "string"
+        },
+        "proxyDescription": {
+          "description": "The description of any proxy in use",
+          "type": "string"
+        },
+        "proxyType": {
+          "description": "The type of any proxy in use",
+          "type": "string"
+        },
+        "region": {
+          "description": "The region the device is in",
+          "type": "string"
+        },
+        "screenResolutionX": {
+          "description": "The screen width in pixels",
+          "format": "int32",
+          "type": "integer"
+        },
+        "screenResolutionY": {
+          "description": "The screen height in pixels",
+          "format": "int32",
+          "type": "integer"
+        },
+        "silverlightData": {
+          "description": "Any silverlight data from the device",
+          "type": "string"
+        },
+        "speedOfInteraction": {
+          "description": "The speed of the device's connection",
+          "type": "string"
+        },
+        "tpDeviceScore": {
+          "description": "Third party Risk score (InAuth, biocatch…etc). Can be used for systems like SOCURE passing a device authorization score.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "tpDeviceScoreReason": {
+          "description": "Third party Risk score Reason Code (InAuth, biocatch…etc)",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of device: mobile or PC",
+          "enum": [
+            "MOBILE",
+            "PC"
+          ],
+          "type": "string"
+        },
+        "userAgent": {
+          "description": "Any software agent in use at the time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Error": {
+      "description": "Represents an error response from the funding API request.",
+      "properties": {
+        "code": {
+          "description": "The response code.",
+          "example": "404",
+          "readOnly": true,
+          "type": "string"
+        },
+        "details": {
+          "description": "The details of the error message.",
+          "example": "User with supplied identifier not found.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "message": {
+          "description": "The HTTP response code message.",
+          "example": "Not Found",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ExternalBankAccount": {
+      "description": "Represents the `BankAccount` associated with a `FundingAccount` or `CustomerFundingAccount`.",
+      "properties": {
+        "accountNumber": {
+          "description": "The last 4 digits of the `BankAccount` account number.",
+          "example": "0812",
+          "type": "string"
+        },
+        "authorizedUsers": {
+          "description": "The list of `AuthorizedUsers` that are authorized users of the `BankAccount`.",
+          "items": {
+            "$ref": "#/definitions/AuthorizedUser"
+          },
+          "type": "array"
+        },
+        "bankName": {
+          "description": "The name of the bank the `BankAccount` belongs to.",
+          "example": "Hero Bank",
+          "type": "string"
+        },
+        "created": {
+          "description": "The timestamp when the `BankAccount` was created.",
+          "example": "2017-01-01T13:01:01Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the `BankAccount`.",
+          "example": "ba_45fc183f900c4d9292610254b04c0089",
+          "readOnly": true,
+          "type": "string"
+        },
+        "routingNumber": {
+          "description": "The `BankAccount` routing number.",
+          "example": "134570812",
+          "type": "string"
+        },
+        "subType": {
+          "enum": [
+            "CHECKING",
+            "SAVINGS"
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates the type of `BankAccount`.",
+          "enum": [
+            "DDA",
+            "MMA",
+            "LOAN"
+          ],
+          "example": "DDA",
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `BankAccount` was last updated.",
+          "example": "2017-01-01T13:01:01Z",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "bankName",
+        "created",
+        "id",
+        "type",
+        "updated"
+      ],
+      "type": "object"
+    },
+    "FundingAccount": {
+      "description": "This is the account to fund the `Payment` from and it is a bank account at the partner bank.",
+      "properties": {
+        "bankAccount": {
+          "$ref": "#/definitions/BankAccount"
+        },
+        "created": {
+          "description": "The timestamp the `FundingAccount` was created.",
+          "example": "2018-03-15T18:20:01Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "defaultFundingAccount": {
+          "description": "Indicates if the `FundingAccount` is the default for the `User`.",
+          "example": true,
+          "type": "boolean"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `FundingAccount`.",
+          "example": "Qyh1JwU2t4JA",
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the `FundingAccount`.",
+          "example": "fa_b8ef29c894cc4ecca9446d00b0a1e838",
+          "type": "string"
+        },
+        "nickname": {
+          "description": "A nickname to use when displaying the `FundingAccount`.",
+          "example": "Joint Checking",
+          "type": "string"
+        },
+        "partnerId": {
+          "description": "The identifier to use when referencing the `FundingAccount` with the partner.",
+          "example": "6fec849a4fee406a955c59a7557c1e21",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the `FundingAccount`.",
+          "enum": [
+            "ACTIVE",
+            "ARCHIVED"
+          ],
+          "example": "ACTIVE",
+          "type": "string"
+        },
+        "type": {
+          "description": "If `FOREIGN_KEY`, then `partnerId` must be set. If `ACCOUNT_DETAILS`, then the `BankAccount` must be supplied and `partnerId` is optional.",
+          "enum": [
+            "FOREIGN_KEY",
+            "ACCOUNT_DETAILS"
+          ],
+          "example": "ACCOUNT_DETAILS",
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp the `FundingAccount` was last updated.",
+          "example": "2018-03-15T18:20:01Z",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "created",
+        "defaultFundingAccount",
+        "id",
+        "status",
+        "type",
+        "updated"
+      ],
+      "type": "object"
+    },
+    "Link": {
+      "description": "Provides a relative uri to a related API resource.",
+      "properties": {
+        "rel": {
+          "description": "The type of the relationship with the related API resource.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uri": {
+          "description": "The relative `URI` to use to retrieve the related API resource.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "rel",
+        "uri"
+      ],
+      "type": "object"
+    },
+    "MonthlySchedule": {
+      "description": "Determines when `Payments` are made for the associated `PayeeAccount`.",
+      "properties": {
+        "daysOfMonthToRepeat": {
+          "description": "If a `Payment` is to be made bi-monthly, the user provides the first day of the month. The client application determines second day of the month by adding 15 days to the first day of the month. If a `Payment` is to be made on the last day of the month the user should provide `[31]`. If the scheduled month does not contain that day of the month, the payment will be scheduled for the last day of the month. For example if the user selects the 29th day of the month, payments made in the month of February will be made on the 28th unless the year is a leap year.",
+          "items": {
+            "description": "If a `Payment` is to be made bi-monthly, the user provides the first day of the month. The client application determines second day of the month by adding 15 days to the first day of the month. If a `Payment` is to be made on the last day of the month the user should provide `[31]`. If the scheduled month does not contain that day of the month, the payment will be scheduled for the last day of the month. For example if the user selects the 29th day of the month, payments made in the month of February will be made on the 28th unless the year is a leap year.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "repeatEveryXMonths": {
+          "description": "The monthly frequency at which to make a `Payment`. If the user specifies the value 1 for `repeatEveryXMonths`, a `Payment` is made every month.  If the user specifies 2 for `repeatEveryXMonths` a `Payment` is made every other month.",
+          "format": "int32",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "daysOfMonthToRepeat",
+        "repeatEveryXMonths"
+      ],
+      "type": "object"
+    },
+    "Name": {
+      "description": "Represents a name within the API.",
+      "properties": {
+        "businessName": {
+          "description": "The name of the business the account belongs to.",
+          "example": "Downtown Electric, Inc.",
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string"
+        },
+        "firstName": {
+          "description": "The user's first name.",
+          "example": "Joe",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "lastName": {
+          "description": "The user's last name.",
+          "example": "Doe",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "middleNameOrInitial": {
+          "description": "The user's middle name or initial.",
+          "example": "R.",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "openFormNameField": {
+          "description": "If the user's name cannot be broken into parts, a single line for the user's name can be set here.",
+          "example": "Joe R. Doe Jr.",
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string"
+        },
+        "suffix": {
+          "description": "The user's suffix if applicable.",
+          "example": "Jr.",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates the name type.",
+          "enum": [
+            "INDIVIDUAL",
+            "BUSINESS"
+          ],
+          "example": "INDIVIDUAL",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "PayeeSummary": {
+      "description": "Contains summary information about the `Payee`.",
+      "properties": {
+        "accountNumber": {
+          "description": "The last 4 of the `accountNumber` for the `PayeeAccount`. For security reasons, the full `accountNumber` will never be returned from the API.",
+          "type": "string"
+        },
+        "linkStatus": {
+          "description": "Indicates the linking status of the `Payee`. `LINKABLE` indicates the `Payee` can be linked, but there is currently no attempt to link the `Payee`. `NOT_LINKABLE` indicates the `Payee` does not support linking. `LINKED` indicates the `Payee` has been linked. Other statuses are indicators of the status of an in progress link attempt. Please see the documentation on linking `Payee`s for further information.",
+          "enum": [
+            "LINKING",
+            "LINKING_DATUMS_VERIFIED",
+            "DATUMS_INVALID",
+            "DATUMS_MISSING",
+            "LOCKED",
+            "CLOSED",
+            "LINKED",
+            "OUTAGE",
+            "PENDING",
+            "DATUMS_VALID",
+            "LINKABLE",
+            "NOT_LINKABLE",
+            "DEPRECATED",
+            "NONE"
+          ],
+          "example": "DATUMS_VALID",
+          "type": "string"
+        },
+        "merchantId": {
+          "description": "The identifier of the `Merchant` associated with the `Payee`.",
+          "type": "string"
+        },
+        "payeeAccountName": {
+          "description": "The name that identifies the `PayeeAccount` within the `Payee`.",
+          "type": "string"
+        },
+        "payeeEmail": {
+          "description": "The email address of the `Payee` provided by the user.",
+          "type": "string"
+        },
+        "payeeName": {
+          "description": "The name of the `Payee` provided by the user or the `Merchant` name if not provided by the user.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Represents the status of the `Payee`. `ACTIVE` is a `Payee` in good standing. `PENDING` payees are in the process of being set up. `ARCHIVED` payees should not be shown to the user.",
+          "enum": [
+            "ACTIVE",
+            "ARCHIVED"
+          ],
+          "example": "ARCHIVED",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Payment": {
+      "description": "Contains information about the `Payment`.",
+      "properties": {
+        "attributes": {
+          "items": {
+            "$ref": "#/definitions/PaymentAttribute"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "created": {
+          "description": "The timestamp when the `Payment` was created.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "customerFundingAccount": {
+          "$ref": "#/definitions/CustomerFundingAccount"
+        },
+        "deliverByDate": {
+          "description": "The date the payment will be delivered to the merchant.",
+          "example": "2020-01-01",
+          "format": "date",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `Payment`.",
+          "example": "Qyh1JwU2t4JA",
+          "type": "string"
+        },
+        "feeAllowance": {
+          "$ref": "#/definitions/Amount"
+        },
+        "fraudStatus": {
+          "description": "Indicates if a fraud review has been requested, or if requested and a response was received, what the result was.",
+          "enum": [
+            "NOT_REQUESTED",
+            "REQUESTED",
+            "RE_REQUESTED",
+            "NEEDS_REVIEW",
+            "APPROVED",
+            "DENIED"
+          ],
+          "type": "string"
+        },
+        "fraudUpdated": {
+          "description": "The last time the fraud status was changed.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "fundingAccount": {
+          "$ref": "#/definitions/FundingAccount"
+        },
+        "id": {
+          "description": "The identifier for the `Payment`.",
+          "example": "p_83ede6ae-a080-11ea-bb37-0242ac130002",
+          "type": "string"
+        },
+        "lastRefundDate": {
+          "description": "The date of the last refund for the payment.",
+          "example": "2020-01-01",
+          "format": "date",
+          "type": "string"
+        },
+        "memo": {
+          "description": "An optional user provided message to associate with the `Payment`. The `memo` will be added to the check if the `Payment` is made with a check.",
+          "type": "string"
+        },
+        "ofxToken": {
+          "description": "OFX token",
+          "example": "R1EOD39I5V",
+          "type": "string"
+        },
+        "originationType": {
+          "description": "Indicates how the `Payment` was generated. This has implications on the mutability of the `Payment`.",
+          "enum": [
+            "RECURRENCE_SCHEDULE_PAYMENT",
+            "ONE_TIME_PAYMENT"
+          ],
+          "example": "ONE_TIME_PAYMENT",
+          "type": "string"
+        },
+        "partnerId": {
+          "description": "The unique client idempotency identifier associated with the `Payment` to ensure that the `Payment` is not made more than once.",
+          "type": "string"
+        },
+        "payNow": {
+          "description": "This directs the system to prioritize the `Payment` when set to true. Additionally, the feeAllowance field should be left empty.",
+          "type": "boolean"
+        },
+        "payeeAccountLink": {
+          "$ref": "#/definitions/Link"
+        },
+        "payeeSummary": {
+          "$ref": "#/definitions/PayeeSummary"
+        },
+        "paymentAmount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "paymentDeviceInfo": {
+          "$ref": "#/definitions/PaymentDeviceInfo"
+        },
+        "paymentResult": {
+          "$ref": "#/definitions/PaymentResult"
+        },
+        "paymentResults": {
+          "description": "Only populated if returnAllPaymentResults flag is set to true on the Get Payment by id call",
+          "items": {
+            "$ref": "#/definitions/PaymentResult"
+          },
+          "readOnly": false,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "recurrenceScheduleId": {
+          "description": "Only populated if the `Payment` was generated from the `RecurrenceSchedule`.",
+          "type": "string"
+        },
+        "recurrenceScheduleSummary": {
+          "$ref": "#/definitions/RecurrenceScheduleSummary"
+        },
+        "refundAmount": {
+          "type": "string"
+        },
+        "resourceExtendedStatus": {
+          "type": "string"
+        },
+        "resourceStatus": {
+          "type": "string"
+        },
+        "sendOnDate": {
+          "description": "The date the payment will be sent to the merchant.",
+          "example": "2017-01-01",
+          "format": "date",
+          "type": "string"
+        },
+        "status": {
+          "description": "Indicates the current status of the `Payment`.",
+          "enum": [
+            "PENDING",
+            "PENDING_DEBITED",
+            "CANCELLED",
+            "FAILURE",
+            "INFORMATION_NEEDED",
+            "PROCESSING",
+            "SUBMITTED",
+            "SUCCESS",
+            "SUCCESS_RETURN",
+            "SUCCESS_PARTIAL_RETURN"
+          ],
+          "example": "PROCESSING",
+          "type": "string"
+        },
+        "statusCode": {
+          "description": "Indicates additional details for the current status of the `Payment`. The following fields are deprecated:<ul><li>BILL_NOT_FOUND<li>CARD_SECURITY_CODE_INCORRECT<li>DEPRECATED<li>LOCKED<li>OUTAGE<li>SUBSUMED<li>BANK_ONLY<li>CARD_EXPIRED<li>CARD_ONLY<li>CREATE_SECURITY_QUESTIONS<li>DECLINED<li>EXTERNAL_NOT_ALLOWED<li>EXTERNAL_NOT_VALIDATED<li>VIRTUAL_PAYMENT_ALLOCATION<li>ZIP_CODE_INCORRECT<li>LESS_THAN_AMOUNT_DISALLOWED<li>LESS_THAN_OWED_DISALLOWED<li>NEW_LARGER_AMOUNT_DUE<li>IDENTIFICATION_CODE_REQUIRED<li>DATUMS_INVALID<li>DATUMS_MISSING<li>COMPLIANCE_DECLINED<li>EXPIRATION_TIME_EXCEEDED</ul>",
+          "enum": [
+            "BILL_NOT_FOUND",
+            "CARD_SECURITY_CODE_INCORRECT",
+            "DEPRECATED",
+            "LOCKED",
+            "OUTAGE",
+            "PAYMENT_DISABLED",
+            "SUBSUMED",
+            "BANK_ONLY",
+            "CARD_EXPIRED",
+            "CARD_ONLY",
+            "CREATE_SECURITY_QUESTIONS",
+            "DECLINED",
+            "EXTERNAL_NOT_ALLOWED",
+            "EXTERNAL_NOT_VALIDATED",
+            "VIRTUAL_PAYMENT_ALLOCATION",
+            "ZIP_CODE_INCORRECT",
+            "LESS_THAN_AMOUNT_DISALLOWED",
+            "LESS_THAN_OWED_DISALLOWED",
+            "NEW_LARGER_AMOUNT_DUE",
+            "IDENTIFICATION_CODE_REQUIRED",
+            "DATUMS_INVALID",
+            "DATUMS_MISSING",
+            "COMPLIANCE_DECLINED",
+            "EXPIRATION_TIME_EXCEEDED",
+            "CANCELLED_CSR",
+            "CANCELLED_CUSTOMER",
+            "CANCELLED_NSF",
+            "CANCELLED_FRAUD",
+            "PROCESSING_ERROR",
+            "NEEDS_FRAUD_REVIEW",
+            "FRAUD_REVIEW_HOLD",
+            "RETURN_INITIATED",
+            "PROCESSING_RETURN",
+            "NEEDS_DEBIT_AUTH"
+          ],
+          "example": "CANCELLED_CSR",
+          "type": "string"
+        },
+        "statusCodeReason": {
+          "description": "A reason given for the `Payment`s `StatusCode`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `Payment` was last updated.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "created",
+        "id",
+        "originationType",
+        "payeeAccountLink",
+        "sendOnDate",
+        "status",
+        "updated"
+      ],
+      "type": "object"
+    },
+    "PaymentAttribute": {
+      "description": "User defined attributes of the `Payment`. The attribute field is free form for the user to associate key/value pairs of information with the payment that are meaningful to the user. There is no validation of the key/value pair. The key and value are alphanumeric strings limited to 255 characters.",
+      "properties": {
+        "key": {
+          "description": "The given name of the `PaymentAttribute` on the `Payment`.",
+          "pattern": "^([0-9a-zA-Z_@\\.-]+){1,255}$",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of the `PaymentAttribute` on the `Payment`.",
+          "pattern": "^([0-9a-zA-Z_@\\.-]+){1,255}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "type": "object"
+    },
+    "PaymentDeviceInfo": {
+      "description": "Information about the device the user used to setup the payment.",
+      "properties": {
+        "counterpartyRiskScore": {
+          "description": "Counterparty fraud risk score",
+          "type": "string"
+        },
+        "currentBalance": {
+          "$ref": "#/definitions/Amount"
+        },
+        "customerRiskDecision": {
+          "description": "Risk decision from legacy fraud monitoring system: valid values include PASSED, REVIEW, REJECT, and AUTO_RELEASE. If this field is set to REJECT, then the payment will automatically be denied.",
+          "type": "string"
+        },
+        "customerRiskScore": {
+          "description": "Customer fraud risk score",
+          "type": "string"
+        },
+        "device": {
+          "$ref": "#/definitions/Device"
+        }
+      },
+      "type": "object"
+    },
+    "PaymentRail": {
+      "description": "Represents the method that was used to make the payment.",
+      "properties": {
+        "paymentType": {
+          "description": "The method used to fund the payment. Deprecated and replaced with PaymentResult PaymentInstrumentType",
+          "enum": [
+            "DDA",
+            "MMA",
+            "VIRTUAL_CARD",
+            "VIRTUAL_ACCOUNT",
+            "CONSUMER_CARD"
+          ],
+          "example": "VIRTUAL_CARD",
+          "type": "string",
+          "x-deprecated": true
+        },
+        "railPaymentId": {
+          "description": "The identifier of the payment returned by the Payment Rail.",
+          "type": "string"
+        },
+        "railType": {
+          "description": "The general method used to process the payment.",
+          "enum": [
+            "REALTIME",
+            "EBN",
+            "CHECK",
+            "ACH"
+          ],
+          "example": "REALTIME",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PaymentResult": {
+      "description": "Indicates the final result of the `Payment`.",
+      "properties": {
+        "amountPaid": {
+          "$ref": "#/definitions/Amount"
+        },
+        "cancelled": {
+          "description": "The timestamp when the `PaymentResult` was cancelled.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "cancelledMessage": {
+          "description": "The reason the payment was `CANCELLED`.",
+          "type": "string"
+        },
+        "check": {
+          "$ref": "#/definitions/Check"
+        },
+        "created": {
+          "description": "The timestamp when the `PaymentResult` was created.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "effectiveDate": {
+          "description": "The effective date the `Payment` was actually made.",
+          "format": "date",
+          "type": "string"
+        },
+        "errorMessage": {
+          "description": "The error returned by the merchant when the payment `FAILED`.",
+          "type": "string"
+        },
+        "extendedStatus": {
+          "description": "Provides additional information on the status of the `Payment`.",
+          "enum": [
+            "NONE",
+            "DATUMS_NEEDED",
+            "PAYEE_ACTION_REQUIRED",
+            "PAYMENT_AMOUNT_DECLINED",
+            "PAYMENT_ACCOUNT_DECLINED",
+            "OUTAGE",
+            "DISPUTED",
+            "BILL_NOT_FOUND",
+            "CARD_SECURITY_CODE_INCORRECT",
+            "DEPRECATED",
+            "LOCKED",
+            "PAYMENT_DISABLED",
+            "SUBSUMED",
+            "BANK_ONLY",
+            "CARD_EXPIRED",
+            "CARD_ONLY",
+            "CREATE_SECURITY_QUESTIONS",
+            "DECLINED",
+            "EXTERNAL_NOT_ALLOWED",
+            "EXTERNAL_NOT_VALIDATED",
+            "VIRTUAL_PAYMENT_ALLOCATION",
+            "ZIP_CODE_INCORRECT",
+            "LESS_THAN_AMOUNT_DISALLOWED",
+            "LESS_THAN_OWED_DISALLOWED",
+            "NEW_LARGER_AMOUNT_DUE",
+            "IDENTIFICATION_CODE_REQUIRED",
+            "DATUMS_INVALID",
+            "DATUMS_MISSING",
+            "COMPLIANCE_DECLINED",
+            "EXPIRATION_TIME_EXCEEDED"
+          ],
+          "example": "PAYMENT_AMOUNT_DECLINED",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "The unique, shortened (12 chars) identifier for the `PaymentResult`.",
+          "example": "Qyh1JwU2t4JA",
+          "type": "string"
+        },
+        "feesPaid": {
+          "$ref": "#/definitions/Amount"
+        },
+        "id": {
+          "description": "The identifier for the `PaymentResult`.",
+          "example": "pr_83ede6ae-a080-11ea-bb37-0242ac130002",
+          "type": "string"
+        },
+        "merchantConfirmationNumber": {
+          "description": "The payment confirmation number returned by the merchant when the payment is `PAID`. The `merchantConfirmationNumber` may not be provided if the payment is made through a network or with a check.",
+          "type": "string"
+        },
+        "paymentInstrumentLast4": {
+          "description": "The last four digits of the payment instrument used to make the payment.",
+          "pattern": "[0-9]{4}",
+          "type": "string"
+        },
+        "paymentInstrumentType": {
+          "description": "The payment instrument used to make the payment.",
+          "enum": [
+            "EXTERNAL_MMA",
+            "EXTERNAL_DDA",
+            "EXTERNAL_CARD",
+            "VIRTUAL_BANK_ACCOUNT",
+            "VIRTUAL_CARD"
+          ],
+          "type": "string"
+        },
+        "paymentRail": {
+          "$ref": "#/definitions/PaymentRail"
+        },
+        "referenceNumber": {
+          "description": "The `referenceNumber` for the `Payment` when the payment is made through a network or with a check.",
+          "type": "string"
+        },
+        "refundReason": {
+          "description": "The reason the payment was `REFUNDED`.",
+          "type": "string"
+        },
+        "sentOnDate": {
+          "description": "The date the `Payment` was sent to the merchant.",
+          "format": "date",
+          "type": "string"
+        },
+        "status": {
+          "description": "Indicates the final status of the `Payment`.",
+          "enum": [
+            "SCHEDULED",
+            "SENT",
+            "PAID",
+            "REFUNDED",
+            "CANCELLED",
+            "FAILED",
+            "PARTIALLY_REFUNDED"
+          ],
+          "example": "PAID",
+          "type": "string"
+        },
+        "updated": {
+          "description": "The timestamp when the `PaymentResult` was updated.",
+          "example": "2019-10-14T16:21:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "virtualCardLast4": {
+          "description": "The last four digits of the virtual card if the payment was made with a virtual card.",
+          "pattern": "[0-9]{4}",
+          "type": "string"
+        }
+      },
+      "readOnly": false,
+      "required": [
+        "created",
+        "id",
+        "status",
+        "updated"
+      ],
+      "type": "object"
+    },
+    "RecurrenceScheduleSummary": {
+      "description": "Provides details about a `RecurrenceSchedule`.",
+      "properties": {
+        "billBased": {
+          "$ref": "#/definitions/BillBasedSummary"
+        },
+        "calendarBased": {
+          "$ref": "#/definitions/CalendarBasedSummary"
+        },
+        "endingSetting": {
+          "$ref": "#/definitions/ScheduleEnding"
+        },
+        "holidaySchedulingStrategy": {
+          "default": "PAY_EARLY",
+          "description": "In the event that a `Bill` due date or the next date in a `RecurringSchedule` falls on a non-banking day, this property determines if the `Bill` is paid on the next soonest business day (`PAY_EARLY`) or if it is paid on the next business day after the intended date (`PAY_LATE`).",
+          "enum": [
+            "PAY_EARLY",
+            "PAY_LATE"
+          ],
+          "type": "string"
+        },
+        "partnerScheduleId": {
+          "type": "string"
+        },
+        "status": {
+          "description": "Indicates the status of a `RecurringSchedule`.",
+          "enum": [
+            "ACTIVE",
+            "TERMINATED",
+            "COMPLETE"
+          ],
+          "example": "ACTIVE",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResourceLink": {
+      "description": "Provides resource retrieval information for resources available for download throughout the API.",
+      "properties": {
+        "expiration": {
+          "description": "Indicates when the resource is no longer available for retrieval.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "resourceUrl": {
+          "description": "Indicates the URL to retrieve the resource from.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "resourceUrl"
+      ],
+      "type": "object"
+    },
+    "ScheduleEnding": {
+      "description": "Determines when `Payments` associated with a `RecurringSchedule` should be stopped.",
+      "properties": {
+        "endDateInclusive": {
+          "description": "The date to stop making `Payments` for the `RecurringSchedule`. `Payments` will be made on this date, but not after.",
+          "format": "date",
+          "type": "string"
+        },
+        "finalSendOnDate": {
+          "description": "The send on date for the final payment of the `RecurringSchedule`.",
+          "format": "date",
+          "type": "string"
+        },
+        "numberOfPayments": {
+          "description": "The maximum number of `Payments` to make for the `RecurringSchedule`.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "paymentsMade": {
+          "description": "The number of `Payments` made since the start of the `RecurringSchedule`.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "paymentsRemaining": {
+          "description": "The number of `Payments` remaining in the `RecurringSchedule`.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "type": {
+          "description": "The available types of `ScheduleEndings`.",
+          "enum": [
+            "NUMBER",
+            "USER_STOPPED",
+            "END_DATE",
+            "NO_END_DATE"
+          ],
+          "example": "END_DATE",
+          "type": "string"
+        },
+        "userEndedTimestamp": {
+          "description": "The timestamp at which the user canceled the `RecurringSchedule`.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "WeeklySchedule": {
+      "description": "Determines when `Payments` are made for the associated `PayeeAccount`.",
+      "properties": {
+        "dayOfWeekToRecurOn": {
+          "description": "The days of the week on which a `Payment` is made.",
+          "example": "THURSDAY",
+          "items": {
+            "description": "The days of the week on which a `Payment` is made.",
+            "enum": [
+              "MONDAY",
+              "TUESDAY",
+              "WEDNESDAY",
+              "THURSDAY",
+              "FRIDAY",
+              "SATURDAY",
+              "SUNDAY"
+            ],
+            "example": "THURSDAY",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "repeatEveryXWeeks": {
+          "description": "The weekly frequency at which to make a `Payment`. If the user specifies the value 1 for `repeatEveryXWeeks`, the `Payment` is made every week.  If the user specifies 2 for `repeatEveryXWeeks` the `Payment` is made every other week.",
+          "example": 2,
+          "format": "int32",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "dayOfWeekToRecurOn",
+        "repeatEveryXWeeks"
+      ],
+      "type": "object"
+    }
+  },
+  "info": {
+    "description": "BillGO's Funding API defines the API that BillGO's partners should implement. BillGO is the client of this API and will make requests to the partner's implementation to reserve funds to cover payments. For any request, if the response isn't in the expected json format, BillGO will retry the request for 12 hours, or until a valid response is received.\n",
+    "title": "Partner Funding API",
+    "version": "20201217",
+    "x-logo": {
+      "altText": "BillGO logo",
+      "backgroundColor": "#101010",
+      "url": "https://api-docs.billgo-dev.com/assets/BillGOlogo_white.png"
+    }
+  },
+  "paths": {
+    "/credit-auths": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Request to credit funds to a user's account because the payment amount is being returned.",
+        "operationId": "Request credit authorization",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CreditAuthRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "One or more invalid query parameters were supplied.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "429": {
+            "description": "The request has been throttled. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "503": {
+            "description": "The service is unavailable. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "2xx": {
+            "description": "Any 2xx status code will indicate the credit authorization request was successful.",
+            "schema": {
+              "$ref": "#/definitions/CreditAuthResponse"
+            }
+          }
+        },
+        "tags": [
+          "Funding"
+        ]
+      }
+    },
+    "/credit-auths/{creditAuthTransactionId}": {
+      "delete": {
+        "description": "Cancel the request to credit funds to a user's account.",
+        "operationId": "Cancel credit authorization",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "creditAuthTransactionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "The request to cancel the credit authorization was successful."
+          },
+          "400": {
+            "description": "One or more invalid query parameters were supplied.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The creditAuthTransactionId was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "429": {
+            "description": "The request has been throttled. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "503": {
+            "description": "The service is unavailable. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "tags": [
+          "Funding"
+        ]
+      }
+    },
+    "/debit-auths": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Request to debit funds from a user's account to cover a payment.",
+        "operationId": "Request debit authorization",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/DebitAuthRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "One or more invalid query parameters were supplied.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "429": {
+            "description": "The request has been throttled. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "503": {
+            "description": "The service is unavailable. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "2xx": {
+            "description": "Any 2xx status code will indicate the debit authorization request was successful.",
+            "schema": {
+              "$ref": "#/definitions/DebitAuthResponse"
+            }
+          }
+        },
+        "tags": [
+          "Funding"
+        ]
+      }
+    },
+    "/debit-auths/{debitAuthTransactionId}": {
+      "delete": {
+        "description": "Cancel the request to debit funds from a user's account.",
+        "operationId": "Cancel debit authorization",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "debitAuthTransactionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "The request to cancel the debit authorization was successful."
+          },
+          "400": {
+            "description": "One or more invalid query parameters were supplied.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The debitAuthTransactionId was not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "429": {
+            "description": "The request has been throttled. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "503": {
+            "description": "The service is unavailable. BillGO will retry the request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "tags": [
+          "Funding"
+        ]
+      }
+    },
+    "/health-check": {
+      "get": {
+        "description": "200 response code indicates that the service is up and able to process requests.",
+        "operationId": "Health check",
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "default": {
+            "description": "default response"
+          }
+        }
+      }
+    }
+  },
+  "swagger": "2.0",
+  "x-components": {}
+}

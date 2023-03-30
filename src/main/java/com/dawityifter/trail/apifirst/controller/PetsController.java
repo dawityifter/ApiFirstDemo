@@ -17,8 +17,9 @@ import javax.validation.Valid;
 public class PetsController implements PetsApi {
      private final DebitService debitService;
      private final CreditService creditService;
-   @Override
-   public Mono<ResponseEntity<CreditResponse> authorize(@Valid CreditRequest creditRequest, ServerWebExchange exchange){
+  
+    @Override
+   public Mono<ResponseEntity<CreditResponse> credit(@Valid CreditRequest creditRequest, ServerWebExchange exchange){
        
        return creditService.authorize(crediRequest).map(creditAuthResponse -> ResponseEntity.ok().body(creditAuthResponse);
    }

@@ -1,6 +1,5 @@
 package com.dawityifter.trail.apifirst.controller;
 
-import com.dawityifter.trail.apifirst.api.PetsApi;
 import com.dawityifter.trail.apifirst.service.DebitService;
 import com.dawityifter.trail.apifirst.service.CreditService;
 import com.dawityifter.trail.apifirst.api.UserApi;
@@ -14,12 +13,11 @@ import javax.validation.Valid;
 @RestController
 @Slf4j
 @AllArgsConstructor
-public class PetsController implements PetsApi {
+public class PetsController  {
      private final DebitService debitService;
      private final CreditService creditService;
   
-    @Override
-   public Mono<ResponseEntity<CreditResponse> credit(@Valid CreditRequest creditRequest, ServerWebExchange exchange){
+    public Mono<ResponseEntity<CreditResponse> credit(@Valid CreditRequest creditRequest, ServerWebExchange exchange){
        
        return creditService.authorize(crediRequest).map(creditAuthResponse -> ResponseEntity.ok().body(creditAuthResponse);
    }

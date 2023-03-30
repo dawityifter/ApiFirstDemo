@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import com.dawityifter.trail.apifirst.model.*;
-import java.util.List;
+import javax.validation.Valid;
 @RestController
 @Slf4j
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class PetsController implements PetsApi {
      private final DebitService debitService;
      private final CreditService creditService;
    @Override
-   public Mono<ResponseEntity<CreditResponse> authorize(CreditRequest creditRequest, ServerWebExchange exchange){
+   public Mono<ResponseEntity<CreditResponse> authorize(@Valid CreditRequest creditRequest, ServerWebExchange exchange){
        
        return creditService.authorize(crediRequest).map(creditAuthResponse -> ResponseEntity.ok().body(creditAuthResponse);
    }
